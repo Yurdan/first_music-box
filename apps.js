@@ -91,6 +91,7 @@ addElementTo(mainContainer, document.body);
 
 window.onload = () => {
     renderSection();
+
     const hotList = document.getElementById('hotlist');
     hotList.addEventListener('click', () => {
         mainContainer.innerHTML = '';
@@ -99,8 +100,9 @@ window.onload = () => {
     const homePage = document.getElementById('homePage');
     homePage.addEventListener('click', () => {
         mainContainer.innerHTML = '';
-        renderSection();
-        renderSections();
+        renderSections('library');
+        renderSections('hotlist');
+        renderSections('playlist');
     })
     const myList = document.getElementById('myPlaylist');
     myList.addEventListener('click', () => {
