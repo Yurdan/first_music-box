@@ -2,63 +2,48 @@ import db from './posts.js'
 
 db.myPlaylist = [];
 // ?????? Как эту функцию  сделать короче качественее ????????
-const addToMyPlaylist =(currentId) => { 
- let itemArray;
+const addToMyPlaylist = (currentId) => {
+    let itemArray;
     $.each(db, function (key, value) {
-itemArray = value;
-$.each(itemArray, function (key, value) {
+        itemArray = value;
+        $.each(itemArray, function (key, value) {
 
-$(value).filter(function(key, value) {
-if(value.id == currentId && !db.myPlaylist.find(x => x.id == currentId)) {
-    return db.myPlaylist.push(value);
-};
-})
+            $(value).filter(function (key, value) {
+                if (value.id == currentId && !db.myPlaylist.find(x => x.id == currentId)) {
+                    return db.myPlaylist.push(value);
+                };
+            })
 
-})
+        })
     })
 }
 const createPostContainer = (post) => {
 
     // ???писать так или создать элемент, задать текст и классы в разных колонках???
-    const $postContainer = $("<div>")
-        .addClass("post");
+    let $postContainer = $("<div>").addClass("post");
 
-    const $postAuthor = $("<p>")
-        .text(post.author)
-        .addClass("author");
+    $("<p>").text(post.author)
+        .addClass("author").appendTo($postContainer);
 
-    const $postDescription = $("<p>")
-        .text(post.description);
+    $("<img>").attr("src", post.imgUrl)
+        .addClass("img").on('click', () => {
+            $mainContainer.empty();
+            ($postContainer).appendTo($mainContainer).appendTo($postContainer);
+            $postContainer.appendTo("body");
+        }).appendTo($postContainer);
 
-    const $postTitle = $("<h3>")
-        .text(post.title)
-        .addClass("title");
+    $("<p>").text(post.description).appendTo($postContainer);
 
-    const $postImg = $("<img>")
-        .attr("src", post.imgUrl)
-        .addClass("img");
+    $("<h3>").text(post.title)
+        .addClass("title").appendTo($postContainer);
 
-    const $postAddButton = $("<button> To playlist </button>")
+    $("<button> To playlist </button>")
         .addClass("addToMyPlaylist")
-        .attr("id", post.id);
+        .attr("id", post.id).on('click', (event) => {
+            const currentId = event.currentTarget.id;
+            addToMyPlaylist(+currentId);
+        }).appendTo($postContainer);
 
-    ($postTitle).appendTo($postContainer);
-    ($postImg).appendTo($postContainer);
-    ($postDescription).appendTo($postContainer);
-    ($postAuthor).appendTo($postContainer);
-    ($postAddButton).appendTo($postContainer);
-    ($postContainer).appendTo("body");
-
-    $postImg.on('click', () => {
-        $mainContainer.empty();
-        ($postContainer).appendTo($mainContainer);
-
-    });
-
-    $postAddButton.on('click', (event) => {
-        const currentId = event.currentTarget.id;
-        addToMyPlaylist(+currentId);
-    });
 
     return $postContainer;
 }
