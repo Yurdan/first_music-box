@@ -48,6 +48,7 @@ const addToMyPlaylist = (currentId) => {
 }
 const createPostContainer = (post) => {
 
+<<<<<<< HEAD
     const $postContainer = $("#postContainer");
 
 
@@ -74,6 +75,33 @@ const createPostContainer = (post) => {
     // });
 
 
+=======
+    // ???писать так или создать элемент, задать текст и классы в разных колонках???
+    let $postContainer = $("<div>").addClass("post");
+
+    $("<p>").text(post.author)
+        .addClass("author").appendTo($postContainer);
+
+    $("<img>").attr("src", post.imgUrl)
+        .addClass("img").on('click', () => {
+            $mainContainer.empty();
+            ($postContainer).appendTo($mainContainer).appendTo($postContainer);
+            $postContainer.appendTo("body");
+        }).appendTo($postContainer);
+
+    $("<p>").text(post.description).appendTo($postContainer);
+
+    $("<h3>").text(post.title)
+        .addClass("title").appendTo($postContainer);
+
+    $("<button> To playlist </button>")
+        .addClass("addToMyPlaylist")
+        .attr("id", post.id).on('click', (event) => {
+            const currentId = event.currentTarget.id;
+            addToMyPlaylist(+currentId);
+        }).appendTo($postContainer);
+
+>>>>>>> a9cf5dd9f5e96048336260727d4d6f4af418f10d
 
     return $postContainer;
 }
