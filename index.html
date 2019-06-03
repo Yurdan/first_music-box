@@ -9,6 +9,10 @@
     <header>
         <nav class="disableSelection">
           <h1 class="logo">MusicApp</h1>
+          <div class="search">
+            <input type="text" id="input">
+            <input type="button" id="button">
+          </div>
           <ul id='nav-links' class="nav-links">
             <li id="homePage">Home Page</li>
             <li id="hotlist">Hotlist</li>
@@ -16,12 +20,22 @@
           </ul>
         </nav>
     </header>
+    <section id="mainContainer">
+      <div class="post" id="postContainer" style="display: none">
+        <img class="img" id="postImg">
+        <p class="author" id="postAuthor"></p>
+        <p id="postDescription"></p>
+        <h3 class="title" id="title"></h3>
+      </div>
+
+    </section>
     <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <!-- если раскомментировать сл скрипт, запуститься другой вариант кода -->
   <!-- <script type="module" src="apps.js"></script> -->
   <script type="module" src="app.js"></script>
 </body>
-</html>
+</html>e

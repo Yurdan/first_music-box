@@ -1,64 +1,79 @@
-import db from './posts.js'
+// import db from './posts.js'
 
-db.myPlaylist = [];
+// var xhr = new XMLHttpRequest();
+
+//     xhr.open('GET', 'http://localhost:3000/posts');
+
+//     xhr.send();
+
+//     xhr.onreadystatechange = function () {
+
+//       let db = JSON.parse(xhr.responseText); // не могу получить сразу массив, почему?
+
+//       renderSection(db);
+
+//     }
+
+axios.get('http://localhost:3000/posts')
+    .then(function (response) {
+        // handle success
+        renderSections(response.data);
+        
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+
+
+
+
+
+// db.myPlaylist = [];
 // ?????? Как эту функцию  сделать короче качественее ????????
-const addToMyPlaylist =(currentId) => { 
- let itemArray;
+const addToMyPlaylist = (currentId) => {
+    let itemArray;
     $.each(db, function (key, value) {
-itemArray = value;
-$.each(itemArray, function (key, value) {
+        itemArray = value;
+        $.each(itemArray, function (key, value) {
 
-$(value).filter(function(key, value) {
-if(value.id == currentId && !db.myPlaylist.find(x => x.id == currentId)) {
-    return db.myPlaylist.push(value);
-};
-})
+            $(value).filter(function (key, value) {
+                if (value.id == currentId && !db.myPlaylist.find(x => x.id == currentId)) {
+                    return db.myPlaylist.push(value);
+                };
+            })
 
-})
+        })
     })
 }
 const createPostContainer = (post) => {
 
-    // ???писать так или создать элемент, задать текст и классы в разных колонках???
-    const $postContainer = $("<div>")
-        .addClass("post");
+    const $postContainer = $("#postContainer");
 
-    const $postAuthor = $("<p>")
-        .text(post.author)
-        .addClass("author");
 
-    const $postDescription = $("<p>")
-        .text(post.description);
+    $("#postAuthor").text(post.author);
 
-    const $postTitle = $("<h3>")
-        .text(post.title)
-        .addClass("title");
 
-    const $postImg = $("<img>")
-        .attr("src", post.imgUrl)
-        .addClass("img");
+   $("#postDescription").text(post.description);
 
-    const $postAddButton = $("<button> To playlist </button>")
-        .addClass("addToMyPlaylist")
-        .attr("id", post.id);
+     $("#title").text(post.title);
 
-    ($postTitle).appendTo($postContainer);
-    ($postImg).appendTo($postContainer);
-    ($postDescription).appendTo($postContainer);
-    ($postAuthor).appendTo($postContainer);
-    ($postAddButton).appendTo($postContainer);
-    ($postContainer).appendTo("body");
 
-    $postImg.on('click', () => {
-        $mainContainer.empty();
-        ($postContainer).appendTo($mainContainer);
+    const $postImg = $("#postImg")
+        .attr("src", post.imgUrl);
 
-    });
 
-    $postAddButton.on('click', (event) => {
-        const currentId = event.currentTarget.id;
-        addToMyPlaylist(+currentId);
-    });
+    $postContainer.clone().prependTo("#mainContainer");
+    $postContainer.show();
+
+
+    // $postImg.on('click', () => {
+    //     $mainContainer.empty();
+    //     ($postContainer).appendTo($mainContainer);
+
+    // });
+
+
 
     return $postContainer;
 }
@@ -69,9 +84,9 @@ const renderSection = () => {
     })
 }
 
-const renderSections = (key) => {
-    $.each(db[key], function (key, value) {
-        const $postContainer = createPostContainer(value);
+const renderSections = (arr) => {
+    $.each(arr, function (i, item, array) {
+        const $postContainer = createPostContainer(item);
         ($postContainer).appendTo($mainContainer);
     })
 }
@@ -81,7 +96,7 @@ const $mainContainer = $("<section>").attr("id", "app");
 
 
 window.onload = () => {
-    renderSection();
+    // renderSections();
     $("#homePage").on('click', () => {
         $mainContainer.empty();
         renderSections("library");
@@ -97,8 +112,31 @@ window.onload = () => {
         renderSections("myPlaylist");
     })
 
+    $("#button").on('click', () => {
+       
+// контейнер с карточкой 
+        $.each($(".post"), function (index, $card) {
+        // почему здесь ошибка   
+            $card.find("#title");
+       
+            // $card.find("#title").css("color", "red");
+        })
 
+
+        // 
+        // let $input = $("#input");
+        // let words = $.each($input, function (i, item, array) {
+        //     return item.value;
+            
+        // })
+    })
 }
+
+    // }).on('click', () => {
+    //     alert($("#title").text())
+
+    // })
+    
 
 
 
